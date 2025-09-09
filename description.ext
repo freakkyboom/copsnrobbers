@@ -1,0 +1,60 @@
+author = "Cops & Robbers Repair Layer";
+onLoadName = "Cops & Robbers";
+onLoadMission = "Boot & Diagnose";
+respawn = 3;                         // BASE
+respawnDelay = 5;
+respawnOnStart = 0;
+disabledAI = 1;
+enableDebugConsole = 1;              // dev
+
+class CfgPatches {
+    class CR_Core {
+        units[] = {};
+        weapons[] = {};
+        requiredVersion = 2.10;
+        requiredAddons[] = {"A3_Functions_F","A3_Data_F"};
+        version = "1.0.0";
+        author = "Repair";
+    };
+};
+
+#include "CfgFunctions.hpp"
+
+class CfgRemoteExec {
+    class Functions {
+        mode = 1;          // whitelist
+        jip = 1;
+        // Whitelisted Functions (eigene + BIS)
+        class CR_fnc_notifySide { allowedTargets = 1; jip = 1; };     // server->clients
+        class CR_fnc_toServer    { allowedTargets = 2; jip = 1; };     // clients->server
+        class CR_fnc_srv_registerRobbery { allowedTargets = 2; jip = 1; };
+        class CR_fnc_srv_deposit         { allowedTargets = 2; jip = 1; };
+        class CR_fnc_srv_withdraw        { allowedTargets = 2; jip = 1; };
+        class CR_fnc_srv_startRobbery    { allowedTargets = 2; jip = 1; };
+        class CR_fnc_srv_finishRobbery   { allowedTargets = 2; jip = 1; };
+        class CR_fnc_srv_purchaseGear    { allowedTargets = 2; jip = 1; };
+        class CR_fnc_srv_purchaseVehicle { allowedTargets = 2; jip = 1; };
+        class CR_fnc_createDispatchMarker { allowedTargets = 0; jip = 1; };
+        class BIS_fnc_showNotification { allowedTargets = 0; jip = 1; };
+        class BIS_fnc_holdActionAdd   { allowedTargets = 0; jip = 1; };
+    };
+    class Commands {
+        mode = 1;
+        jip = 1;
+    };
+};
+
+class CfgNotifications {
+    class CR_INFO {
+        title = "Cops & Robbers";
+        iconPicture = "\A3\ui_f\data\map\mapcontrol\taskIcon_CA.paa";
+        iconText = "";
+        description = "%2";
+        color[] = {0.9,0.9,0.9,1};
+        duration = 6;
+        priority = 5;
+        difficulty[] = {};
+    };
+}
+
+class RscTitles {};  // UI reserviert, aktuell ungenutzt
