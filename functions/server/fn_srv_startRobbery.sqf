@@ -68,12 +68,19 @@ missionNamespace setVariable ["CR_GAS_COOLDOWN", time + 300, true];
 CR_CurrentRobbery = [_unit, _pos, time];
 publicVariable "CR_CurrentRobbery";
 
-// Schedule the robbery completion after 60 seconds. We use a spawned
-// thread on the server so we do not block. After the wait, we call
-// the finish handler directly (no remote exec needed since we're
+// Enhanced RPT logging for robbery start
+diag_log format ["[CR][Robbery] STARTED - Player: %1 (UID: %2) | Position: %3 | Weapon Status: Primary=%4, Handgun=%5 | Time: %6", 
+    name _unit, getPlayerUID _unit, _pos, primaryWeapon _unit, handgunWeapon _unit, time];
+
+// Play alarm sound at robbery location
+[_pos, "Alarm"] remoteExec ["say3D", 0];
+
+// Schedule the robbery completion after 120 seconds (2 minutes as required).
+// We use a spawned thread on the server so we do not block. After the wait, 
+// we call the finish handler directly (no remote exec needed since we're
 // already on the server).
 [] spawn {
-    sleep 60;
+    sleep 120;
     call CR_fnc_srv_finishRobbery;
 };
 

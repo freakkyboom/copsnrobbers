@@ -36,7 +36,8 @@ _robber setVariable ["CR_Cash", _cash + _payout, true];
 // Send notification to the robber
 ["CR_INFO", ["Tankstelle", format ["Beute: %1$.", _payout]]] remoteExec ["BIS_fnc_showNotification", owner _robber];
 
-diag_log format ["[CR][Robbery] Finished: %1 earned %2$ (duration %3s)", name _robber, _payout, round (time - _start)];
+diag_log format ["[CR][Robbery] COMPLETED - Player: %1 earned %2$ (duration %3s) | Total Cash: %4$", 
+    name _robber, _payout, round (time - _start), _cash + _payout];
 
 // Clear the robbery state
 CR_CurrentRobbery = nil;
