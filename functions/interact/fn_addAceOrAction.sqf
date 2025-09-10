@@ -34,19 +34,28 @@ params [
 private _hasACE = isClass (configFile >> "CfgPatches" >> "ace_interact_menu");
 if (!isNull _obj) then {
     if (_hasACE) then {
-        private _act = [
-            format ["CR_%1", _title],
-            _title,
-            "",
-            _code,
-            _cond_show,
-            _cond_enable,
-            {},
-            _args
-        ] call ace_interact_menu_fnc_createAction;
-        [_obj, 0, ["ACE_MainActions"], _act] call ace_interact_menu_fnc_addActionToObject;
-    } else {
-        // Fallback: addAction ohne Conditions
+        // Validate ACE functions exist before calling
+        if (!isNil "ace_interact_menu_fnc_createAction" && !isNil "ace_interact_menu_fnc_addActionToObject") then {
+            private _act = [
+                format ["CR_%1", _title],
+                _title,
+                "",
+                _code,
+                _cond_show,
+                _cond_enable,
+                {},
+                _args
+            ] call ace_interact_menu_fnc_createAction;
+            [_obj, 0, ["ACE_MainActions"], _act] call ace_interact_menu_fnc_addActionToObject;
+            diag_log format ["[CR][ACE] Added ACE interaction '%1' to %2", _title, typeOf _obj];
+        } else {
+            diag_log format ["[CR][ACE] ERROR: ACE functions not available, falling back to addAction for '%1'", _title];
+            _hasACE = false;
+        };
+    };
+    
+    if (!_hasACE) then {
+        // Fallback: addAction with proper conditions and logging
         _obj addAction [
             _title,
             _code,
@@ -58,5 +67,8 @@ if (!isNull _obj) then {
             "",
             ""
         ];
+        diag_log format ["[CR][Action] Added standard action '%1' to %2", _title, typeOf _obj];
     };
+} else {
+    diag_log format ["[CR][ERROR] Cannot add interaction '%1' - object is null", _title];
 };

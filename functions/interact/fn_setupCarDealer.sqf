@@ -21,12 +21,19 @@ if (isNull _npc) then {
     private _mOK = ["car_dealer_1"] call CR_fnc_nearMarkerPos;
     if ((_mOK select 0)) then {
         private _pos = _mOK select 1;
-        _npc = "Logic" createVehicleLocal _pos;
+        try {
+            _npc = "Logic" createVehicleLocal _pos;
+            diag_log format ["[CR][CarDealer] Erstellt Logic-Objekt für car_dealer_1 an Marker-Position %1", _pos];
+        } catch {
+            diag_log format ["[CR][CarDealer] FEHLER beim Erstellen des Logic-Objekts: %1", _exception];
+        };
+    } else {
+        diag_log "[CR][CarDealer] WARNUNG: Marker car_dealer_1 nicht gefunden";
     };
 };
 
 if (isNull _npc) exitWith {
-    diag_log "[CR][CarDealer] Kein NPC oder Marker für car_dealer_1 gefunden.";
+    diag_log "[CR][CarDealer] FEHLER: Kein NPC oder Marker für car_dealer_1 gefunden.";
 };
 
 // Client-side list of vehicles (className, price)
@@ -51,3 +58,4 @@ private _openDealer = {
 
 // Attach the interaction
 [_npc, "Fahrzeug kaufen", _openDealer] call CR_fnc_addAceOrAction;
+diag_log "[CR][CarDealer] Fahrzeug-Kauf Interaktion erfolgreich hinzugefügt";
