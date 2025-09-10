@@ -93,7 +93,7 @@ private _arsMarkers = if (_isCop) then { ["cop_arsenal"] } else { if (_isRobber)
                         params ["_target", "_player", "_params"];
                         [_player] call CR_fnc_unitIsRobber && (player distance (_params select 0)) < 3
                     },
-                    {},
+                    {[]},
                     [_pos]
                 ] call ace_interact_menu_fnc_createAction;
                 [player, 1, ["ACE_SelfActions"], _action] call ace_interact_menu_fnc_addActionToObject;
@@ -140,7 +140,7 @@ if (_isRobber) then {
                         params ["_target", "_player", "_params"];
                         [_player] call CR_fnc_unitIsRobber && (player distance (_params select 0)) < 6
                     },
-                    {},
+                    {[]},
                     [_pos]
                 ] call ace_interact_menu_fnc_createAction;
                 [player, 1, ["ACE_SelfActions"], _action] call ace_interact_menu_fnc_addActionToObject;

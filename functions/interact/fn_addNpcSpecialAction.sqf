@@ -41,7 +41,7 @@ if (!isNull _obj) then {
             _icon,
             {},
             {true},
-            {},
+            {[]},
             {},
             []
         ] call ace_interact_menu_fnc_createAction;
@@ -57,7 +57,7 @@ if (!isNull _obj) then {
             _code,
             _cond_show,
             _cond_enable,
-            {},
+            {[]},
             _args
         ] call ace_interact_menu_fnc_createAction;
         

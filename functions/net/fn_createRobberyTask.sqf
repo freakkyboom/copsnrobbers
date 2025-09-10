@@ -22,6 +22,8 @@ private _taskId = format ["CR_Task_RobberyResponse_%1", round time];
     _pos,
     "ASSIGNED",
     2,
+    true,
+    "attack",
     true
 ] call BIS_fnc_taskCreate;
 
@@ -29,9 +31,10 @@ private _taskId = format ["CR_Task_RobberyResponse_%1", round time];
 ["CR_INFO", ["EINSATZ", "Raubüberfall gemeldet! Neue Aufgabe erhalten."]] call BIS_fnc_showNotification;
 
 // Auto-complete the task after 3 minutes (when robbery would be over)
-[] spawn {
+[_taskId] spawn {
+    params ["_taskId"];
     sleep 180;
-    if (!isNil _taskId) then {
+    if (!isNil "_taskId") then {
         [_taskId, "SUCCEEDED"] call BIS_fnc_taskSetState;
     };
 };
