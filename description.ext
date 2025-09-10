@@ -12,7 +12,7 @@ class CfgPatches {
         units[] = {};
         weapons[] = {};
         requiredVersion = 2.10;
-        requiredAddons[] = {"A3_Functions_F","A3_Data_F"};
+        requiredAddons[] = {"A3_Functions_F","A3_Data_F","ace_common","ace_interact_menu"};
         version = "1.0.0";
         author = "Repair";
     };
@@ -34,7 +34,9 @@ class CfgRemoteExec {
         class CR_fnc_srv_finishRobbery   { allowedTargets = 2; jip = 1; };
         class CR_fnc_srv_purchaseGear    { allowedTargets = 2; jip = 1; };
         class CR_fnc_srv_purchaseVehicle { allowedTargets = 2; jip = 1; };
+        class CR_fnc_srv_spawnFreeVehicle { allowedTargets = 2; jip = 1; };
         class CR_fnc_createDispatchMarker { allowedTargets = 0; jip = 1; };
+        class CR_fnc_createRobberyTask { allowedTargets = 0; jip = 1; };
         class BIS_fnc_showNotification { allowedTargets = 0; jip = 1; };
         class BIS_fnc_holdActionAdd   { allowedTargets = 0; jip = 1; };
     };

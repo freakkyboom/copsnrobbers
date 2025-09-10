@@ -15,7 +15,8 @@ class CfgFunctions {
             file = "functions\net";
             class notifySide {};
             class toServer {};
-        class createDispatchMarker {};
+            class createDispatchMarker {};
+            class createRobberyTask {};
         };
 
         class Util {
@@ -35,6 +36,8 @@ class CfgFunctions {
             class setupGearDealer {};
             class setupCarDealer {};
             class setupGarage {};
+            // Progress-based robbery
+            class startRobberyWithProgress {};
         };
 
         class Gameplay {
@@ -53,6 +56,7 @@ class CfgFunctions {
             class srv_finishRobbery {};
             class srv_purchaseGear {};
             class srv_purchaseVehicle {};
+            class srv_spawnFreeVehicle {};
         };
     };
 };
