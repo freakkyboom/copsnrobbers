@@ -74,10 +74,12 @@ private _arsMarkers = if (_isCop) then { ["cop_arsenal"] } else { if (_isRobber)
             ["CR_fnc_toServer", ["CR_fnc_srv_withdraw", [player, 500]]] remoteExec [2];
         }] call CR_fnc_addAceOrAction;
         
+        diag_log format ["[CR][ATM] Standard Banking-Aktionen hinzugefügt für ATM: %1", _x];
+        
         // Robbery action only for robbers using ACE3 self-interaction
         if (_isRobber) then {
             private _hasACE = isClass (configFile >> "CfgPatches" >> "ace_interact_menu");
-            if (_hasACE) then {
+            if (_hasACE && !isNil "ace_interact_menu_fnc_createAction" && !isNil "ace_interact_menu_fnc_addActionToObject") then {
                 // ACE3 self-interaction (Windows key) for robbery
                 private _action = [
                     format ["CR_RobATM_%1", _x],
@@ -95,7 +97,11 @@ private _arsMarkers = if (_isCop) then { ["cop_arsenal"] } else { if (_isRobber)
                     [_pos]
                 ] call ace_interact_menu_fnc_createAction;
                 [player, 1, ["ACE_SelfActions"], _action] call ace_interact_menu_fnc_addActionToObject;
+                diag_log format ["[CR][ATM] ACE3 Self-Action für ATM-Raub hinzugefügt: %1", _x];
             } else {
+                if (_hasACE) then {
+                    diag_log format ["[CR][ATM] WARNUNG: ACE3 erkannt aber Funktionen nicht verfügbar für %1", _x];
+                };
                 // Fallback for non-ACE
                 _atmObject addAction [
                     "ATM knacken",
@@ -105,8 +111,10 @@ private _arsMarkers = if (_isCop) then { ["cop_arsenal"] } else { if (_isRobber)
                     },
                     [_pos], 1.5, true, true, "", format ["([player] call CR_fnc_unitIsRobber) && (player distance %1) < 3", _pos]
                 ];
+                diag_log format ["[CR][ATM] Standard Action für ATM-Raub hinzugefügt: %1", _x];
             };
         };
+    };
     };
 } forEach ["atm_1","atm_2","atm_3","atm_4","atm_5"];
 
@@ -118,7 +126,7 @@ if (_isRobber) then {
             private _pos = _ok select 1;
             private _hasACE = isClass (configFile >> "CfgPatches" >> "ace_interact_menu");
             
-            if (_hasACE) then {
+            if (_hasACE && !isNil "ace_interact_menu_fnc_createAction" && !isNil "ace_interact_menu_fnc_addActionToObject") then {
                 // ACE3 self-interaction (Windows key) for gas station robbery
                 private _action = [
                     format ["CR_RobGasStation_%1", _x],
@@ -136,7 +144,11 @@ if (_isRobber) then {
                     [_pos]
                 ] call ace_interact_menu_fnc_createAction;
                 [player, 1, ["ACE_SelfActions"], _action] call ace_interact_menu_fnc_addActionToObject;
+                diag_log format ["[CR][GasStation] ACE3 Self-Action für Tankstellen-Raub hinzugefügt: %1", _x];
             } else {
+                if (_hasACE) then {
+                    diag_log format ["[CR][GasStation] WARNUNG: ACE3 erkannt aber Funktionen nicht verfügbar für %1", _x];
+                };
                 // Fallback for non-ACE
                 player addAction [
                     format ["Tankstelle ausrauben (%1)", _x],
@@ -146,6 +158,7 @@ if (_isRobber) then {
                     },
                     [_pos], 1.5, true, true, "", format ["([player] call CR_fnc_unitIsRobber) && (player distance %1) < 6", _pos]
                 ];
+                diag_log format ["[CR][GasStation] Standard Action für Tankstellen-Raub hinzugefügt: %1", _x];
             };
         };
     } forEach ["gas_station_1","gas_station_2","gas_station_3","vault_area"];

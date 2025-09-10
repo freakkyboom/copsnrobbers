@@ -20,12 +20,19 @@ if (isNull _npc) then {
     private _mOK = ["gear_dealer_1"] call CR_fnc_nearMarkerPos;
     if ((_mOK select 0)) then {
         private _pos = _mOK select 1;
-        _npc = "Logic" createVehicleLocal _pos;
+        try {
+            _npc = "Logic" createVehicleLocal _pos;
+            diag_log format ["[CR][GearDealer] Erstellt Logic-Objekt für gear_dealer_1 an Marker-Position %1", _pos];
+        } catch {
+            diag_log format ["[CR][GearDealer] FEHLER beim Erstellen des Logic-Objekts: %1", _exception];
+        };
+    } else {
+        diag_log "[CR][GearDealer] WARNUNG: Marker gear_dealer_1 nicht gefunden";
     };
 };
 
 if (isNull _npc) exitWith {
-    diag_log "[CR][GearDealer] Kein NPC oder Marker für gear_dealer_1 gefunden.";
+    diag_log "[CR][GearDealer] FEHLER: Kein NPC oder Marker für gear_dealer_1 gefunden.";
 };
 
 // Define the shop inventory on the client. Categories and items are
@@ -67,5 +74,6 @@ private _openShop = {
     ["CR_fnc_toServer", ["CR_fnc_srv_purchaseGear", [_caller, _className, _price]]] remoteExec [2];
 };
 
-// Attach the interaction using the ACE/fallback helper
-[_npc, "Ausrüstung kaufen", _openShop] call CR_fnc_addAceOrAction;
+// Attach the interaction using specialized NPC helper
+[_npc, "Ausrüstung kaufen", _openShop, "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa"] call CR_fnc_addNpcSpecialAction;
+diag_log "[CR][GearDealer] Ausrüstungs-Kauf Interaktion erfolgreich hinzugefügt";

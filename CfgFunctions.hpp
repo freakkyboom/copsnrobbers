@@ -31,6 +31,8 @@ class CfgFunctions {
             class setupInteractions {};
             // ACE/Action helper
             class addAceOrAction {};
+            // NPC-specific interaction helper
+            class addNpcSpecialAction {};
             // Custom setups
             class setupRobberyNPCs {};
             class setupGearDealer {};

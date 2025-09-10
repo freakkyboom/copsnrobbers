@@ -37,18 +37,35 @@ private _stations = ["gas_station_1","gas_station_2","gas_station_3"];
             // Create a local logic to attach the action to. This will
             // not be synced across clients but is sufficient for
             // interactions.
-            _npc = "Logic" createVehicleLocal _pos;
+            try {
+                _npc = "Logic" createVehicleLocal _pos;
+                diag_log format ["[CR][RobberyNPC] Erstellt Logic-Objekt für %1 an Marker-Position %2", _name, _pos];
+            } catch {
+                diag_log format ["[CR][RobberyNPC] FEHLER beim Erstellen des Logic-Objekts für %1: %2", _name, _exception];
+            };
+        } else {
+            diag_log format ["[CR][RobberyNPC] WARNUNG: Marker %1 nicht gefunden", _name];
         };
     };
 
     if (!isNull _npc) then {
-        // Attach the robbery interaction using our ACE/fallback helper.
+        // Attach the robbery interaction using specialized NPC helper
         [_npc, "Tankstelle ausrauben", {
             params ["_target", "_caller", "_actionId", "_args"];
             // Delegate to the client stub which will call the server.
             [_target] call CR_fnc_startRobbery;
-        }] call CR_fnc_addAceOrAction;
+        }, "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_hack_ca.paa", {
+            // Show condition: only for robbers and within range
+            params ["_target", "_caller"];
+            [_caller] call CR_fnc_unitIsRobber && (_caller distance _target) < 6
+        }, {
+            // Enable condition: same as show condition  
+            params ["_target", "_caller"];
+            [_caller] call CR_fnc_unitIsRobber && (_caller distance _target) < 6
+        }] call CR_fnc_addNpcSpecialAction;
+        
+        diag_log format ["[CR][RobberyNPC] Erfolgreich spezielle NPC-Interaktion hinzugefügt für %1 an Position %2", _name, position _npc];
     } else {
-        diag_log format ["[CR][RobberyNPC] Kein NPC oder Marker gefunden für %1", _name];
+        diag_log format ["[CR][RobberyNPC] FEHLER: Kein NPC oder Marker gefunden für %1", _name];
     };
 } forEach _stations;
