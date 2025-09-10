@@ -43,7 +43,7 @@ if (!isNull _obj) then {
                 _code,
                 _cond_show,
                 _cond_enable,
-                {},
+                {[]},
                 _args
             ] call ace_interact_menu_fnc_createAction;
             [_obj, 0, ["ACE_MainActions"], _act] call ace_interact_menu_fnc_addActionToObject;

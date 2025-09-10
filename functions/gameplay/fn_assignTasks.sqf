@@ -38,8 +38,8 @@ private _createTask = {
         "CREATED",              // State
         0,                      // Priority
         true,                   // Show in task list
-        true,                   // Visible in 3D
-        "target"                // Type
+        "target",               // Type
+        true                    // Visible in 3D
     ] call BIS_fnc_taskCreate;
 
     _owner setVariable [_taskId, _task, false];
