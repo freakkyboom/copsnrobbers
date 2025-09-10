@@ -17,10 +17,11 @@ if (_hasACE) then {
     // Use ACE3 progress bar (2 minutes = 120 seconds)
     [
         120,
-        [],
+        [_pos],
         {
             // On completion: notify server to start robbery
-            ["CR_fnc_toServer", ["CR_fnc_srv_startRobbery", [player, _this select 0]]] remoteExec [2];
+            params ["_args"];
+            ["CR_fnc_toServer", ["CR_fnc_srv_startRobbery", [player, _args select 0]]] remoteExec [2];
             true
         },
         {
@@ -31,9 +32,10 @@ if (_hasACE) then {
         _robberyText,
         {
             // Condition: player must stay close to robbery location
-            (player distance (_this select 0)) < 6
+            params ["_args"];
+            (player distance (_args select 0)) < 6
         },
-        [_pos]
+        []
     ] call ace_common_fnc_progressBar;
 } else {
     // Fallback: vanilla progress using hint system

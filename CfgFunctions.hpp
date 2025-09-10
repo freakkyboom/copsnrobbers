@@ -15,7 +15,8 @@ class CfgFunctions {
             file = "functions\net";
             class notifySide {};
             class toServer {};
-        class createDispatchMarker {};
+            class createDispatchMarker {};
+            class createRobberyTask {};
         };
 
         class Util {

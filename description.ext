@@ -36,6 +36,7 @@ class CfgRemoteExec {
         class CR_fnc_srv_purchaseVehicle { allowedTargets = 2; jip = 1; };
         class CR_fnc_srv_spawnFreeVehicle { allowedTargets = 2; jip = 1; };
         class CR_fnc_createDispatchMarker { allowedTargets = 0; jip = 1; };
+        class CR_fnc_createRobberyTask { allowedTargets = 0; jip = 1; };
         class BIS_fnc_showNotification { allowedTargets = 0; jip = 1; };
         class BIS_fnc_holdActionAdd   { allowedTargets = 0; jip = 1; };
     };

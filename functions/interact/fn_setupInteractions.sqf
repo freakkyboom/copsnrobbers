@@ -80,17 +80,19 @@ private _arsMarkers = if (_isCop) then { ["cop_arsenal"] } else { if (_isRobber)
             if (_hasACE) then {
                 // ACE3 self-interaction (Windows key) for robbery
                 private _action = [
-                    "CR_RobATM",
+                    format ["CR_RobATM_%1", _x],
                     "ATM knacken",
                     "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_hack_ca.paa",
                     {
                         params ["_target", "_player", "_params"];
-                        [position _target, "atm"] call CR_fnc_startRobberyWithProgress;
+                        [_params select 0, "atm"] call CR_fnc_startRobberyWithProgress;
                     },
                     {
                         params ["_target", "_player", "_params"];
-                        [_player] call CR_fnc_unitIsRobber && (player distance _target) < 3
-                    }
+                        [_player] call CR_fnc_unitIsRobber && (player distance (_params select 0)) < 3
+                    },
+                    {},
+                    [_pos]
                 ] call ace_interact_menu_fnc_createAction;
                 [player, 1, ["ACE_SelfActions"], _action] call ace_interact_menu_fnc_addActionToObject;
             } else {
@@ -98,10 +100,10 @@ private _arsMarkers = if (_isCop) then { ["cop_arsenal"] } else { if (_isRobber)
                 _atmObject addAction [
                     "ATM knacken",
                     {
-                        params ["_target", "_caller"];
-                        [position _target, "atm"] call CR_fnc_startRobberyWithProgress;
+                        params ["_target", "_caller", "_actionId", "_args"];
+                        [_args select 0, "atm"] call CR_fnc_startRobberyWithProgress;
                     },
-                    [], 1.5, true, true, "", format ["([player] call CR_fnc_unitIsRobber) && (player distance %1) < 3", _atmObject]
+                    [_pos], 1.5, true, true, "", format ["([player] call CR_fnc_unitIsRobber) && (player distance %1) < 3", _pos]
                 ];
             };
         };
@@ -119,7 +121,7 @@ if (_isRobber) then {
             if (_hasACE) then {
                 // ACE3 self-interaction (Windows key) for gas station robbery
                 private _action = [
-                    "CR_RobGasStation",
+                    format ["CR_RobGasStation_%1", _x],
                     "Tankstelle ausrauben",
                     "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_hack_ca.paa",
                     {
@@ -137,7 +139,7 @@ if (_isRobber) then {
             } else {
                 // Fallback for non-ACE
                 player addAction [
-                    "Tankstelle ausrauben",
+                    format ["Tankstelle ausrauben (%1)", _x],
                     {
                         params ["_tgt", "_caller", "_actionId", "_args"];
                         [_args select 0, "gas_station"] call CR_fnc_startRobberyWithProgress;

@@ -1,0 +1,44 @@
+/*
+    COPS AND ROBBERS MISSION - FEATURE SUMMARY
+    
+    This file documents the implemented improvements for ArmA 3 compatibility.
+    
+    === COPS FACTION ===
+    * Vehicle Garage: Access to free BLUEFOR vehicles at cop_vehicle_spawn marker
+      - Hunter, Prowler, Quad Bike, HEMTT Transport, AMV-7 Marshall
+    * Arsenal: Located at cop_arsenal marker with blacklist for civilian weapons
+    * Task System: Automatic response tasks when robberies are reported
+    
+    === ROBBERS FACTION ===
+    * Gas Station Robberies: Use ACE3 self-interactions (Windows key) or fallback addAction
+      - Locations: gas_station_1, gas_station_2, gas_station_3, vault_area
+      - 2-minute progress bar with distance condition (must stay within 6m)
+      - Weapon requirement enforced by server
+      - Alarm sound plays at location
+    * ATM Robberies: Similar system for atm_1 through atm_5
+      - 3m distance requirement for ATM interactions
+    * Shop System: Gear dealer with equipment and weapons
+    * Vehicle Purchases: Car dealer with paid civilian vehicles
+    
+    === TECHNICAL FEATURES ===
+    * ACE3 Integration: Proper self-interactions using ace_interact_menu
+    * Progress Bars: ACE3 progress bar with vanilla fallback
+    * Alarm System: Plays "Alarm" sound at robbery location
+    * Task Notifications: Cops receive tasks when robberies start
+    * Enhanced Logging: Comprehensive RPT logs for debugging
+    * Cooldown System: 5-minute cooldown between gas station robberies
+    * Arsenal Blacklist: Faction-specific weapon restrictions
+    
+    === MARKERS REQUIRED ===
+    * cop_arsenal - Police arsenal location
+    * cop_vehicle_spawn - Police vehicle garage  
+    * robber_arsenal - Robber arsenal location
+    * robber_vehicle_spawn - Robber vehicle garage
+    * gas_station_1, gas_station_2, gas_station_3 - Gas station locations
+    * atm_1, atm_2, atm_3, atm_4, atm_5 - ATM locations
+    * vault_area - Additional robbery location
+    * gear_dealer_1 - Equipment shop location
+    * car_dealer_1 - Vehicle shop location
+*/
+
+// This is a documentation file only

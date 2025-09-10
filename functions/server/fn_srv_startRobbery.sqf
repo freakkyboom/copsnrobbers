@@ -63,6 +63,9 @@ missionNamespace setVariable ["CR_GAS_COOLDOWN", time + 300, true];
 // clients (target 0); only cops will display the marker.
 ["CR_fnc_createDispatchMarker", [_pos]] remoteExec [0, true];
 
+// Create a task for all cops to respond to the robbery
+["CR_fnc_createRobberyTask", [_pos]] remoteExec [0, true];
+
 // Store the ongoing robbery information and publish it so other
 // functions (e.g. finish handler) can read it.
 CR_CurrentRobbery = [_unit, _pos, time];
