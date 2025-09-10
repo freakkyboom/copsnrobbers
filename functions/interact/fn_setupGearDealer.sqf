@@ -74,6 +74,6 @@ private _openShop = {
     ["CR_fnc_toServer", ["CR_fnc_srv_purchaseGear", [_caller, _className, _price]]] remoteExec [2];
 };
 
-// Attach the interaction using the ACE/fallback helper
-[_npc, "Ausrüstung kaufen", _openShop] call CR_fnc_addAceOrAction;
+// Attach the interaction using specialized NPC helper
+[_npc, "Ausrüstung kaufen", _openShop, "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa"] call CR_fnc_addNpcSpecialAction;
 diag_log "[CR][GearDealer] Ausrüstungs-Kauf Interaktion erfolgreich hinzugefügt";

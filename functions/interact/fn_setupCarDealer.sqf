@@ -56,6 +56,6 @@ private _openDealer = {
     ["CR_fnc_toServer", ["CR_fnc_srv_purchaseVehicle", [_caller, _class, _price]]] remoteExec [2];
 };
 
-// Attach the interaction
-[_npc, "Fahrzeug kaufen", _openDealer] call CR_fnc_addAceOrAction;
+// Attach the interaction using specialized NPC helper  
+[_npc, "Fahrzeug kaufen", _openDealer, "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa"] call CR_fnc_addNpcSpecialAction;
 diag_log "[CR][CarDealer] Fahrzeug-Kauf Interaktion erfolgreich hinzugefügt";

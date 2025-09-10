@@ -49,12 +49,12 @@ private _stations = ["gas_station_1","gas_station_2","gas_station_3"];
     };
 
     if (!isNull _npc) then {
-        // Attach the robbery interaction using our ACE/fallback helper with specific conditions
+        // Attach the robbery interaction using specialized NPC helper
         [_npc, "Tankstelle ausrauben", {
             params ["_target", "_caller", "_actionId", "_args"];
             // Delegate to the client stub which will call the server.
             [_target] call CR_fnc_startRobbery;
-        }, {
+        }, "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_hack_ca.paa", {
             // Show condition: only for robbers and within range
             params ["_target", "_caller"];
             [_caller] call CR_fnc_unitIsRobber && (_caller distance _target) < 6
@@ -62,9 +62,9 @@ private _stations = ["gas_station_1","gas_station_2","gas_station_3"];
             // Enable condition: same as show condition  
             params ["_target", "_caller"];
             [_caller] call CR_fnc_unitIsRobber && (_caller distance _target) < 6
-        }] call CR_fnc_addAceOrAction;
+        }] call CR_fnc_addNpcSpecialAction;
         
-        diag_log format ["[CR][RobberyNPC] Erfolgreich Interaktion hinzugefügt für %1 an Position %2", _name, position _npc];
+        diag_log format ["[CR][RobberyNPC] Erfolgreich spezielle NPC-Interaktion hinzugefügt für %1 an Position %2", _name, position _npc];
     } else {
         diag_log format ["[CR][RobberyNPC] FEHLER: Kein NPC oder Marker gefunden für %1", _name];
     };
